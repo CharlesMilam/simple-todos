@@ -71,9 +71,17 @@ Meteor.methods({
     });
   },
   deleteTask: function (taskId) {
+    // ensure user id is logged in before deleting task
+    if (!Meteor.userId()){
+      throw new Meteor.Error("not-authorized");
+    }
     Tasks.remove(taskId);
   },
   setChecked: function (taskId, setChecked) {
+    // ensure user id is logged in before checking task
+    if (!Meteor.userId()){
+      throw new Meteor.Error("not-authorized");
+    }
     Tasks.update(taskId, {$set: {checked: setChecked}});
   }
 });
